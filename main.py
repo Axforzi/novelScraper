@@ -109,7 +109,10 @@ def getPDF(driver, wait, chapter_number, title_novel):
             number += 1
 
     print(title_novel, "download completed")
-    pdf.output(title_novel + ".pdf")
+
+    if not(os.path.exists("novels")):
+        os.mkdir("novels")
+    pdf.output(os.path.join("novels", title_novel + ".pdf"))
     os.remove(title_novel + ".png")
 
 def getEPUB(driver, wait, chapter_number, title_novel):
@@ -132,7 +135,7 @@ def getEPUB(driver, wait, chapter_number, title_novel):
 
         # SEE IF THERE ARE MORE CHAPTERS
         classButton = wait.until(ec.element_to_be_clickable((By.CLASS_NAME, "nextchap")))
-
+        
         if "isDisabled" in classButton.get_attribute("class"):
             break
         else:
@@ -140,7 +143,11 @@ def getEPUB(driver, wait, chapter_number, title_novel):
             classButton.click()
             number += 1
     
-    epub.create(os.getcwd() + "\\" + title_novel)
+    print(title_novel, "download completed")
+
+    if not(os.path.exists("novels")):
+        os.mkdir("novels")
+    epub.create(os.path.join(os.getcwd(), "novels", title_novel))
     os.remove(title_novel + ".png")
 
 
